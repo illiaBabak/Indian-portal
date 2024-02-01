@@ -1,9 +1,12 @@
 import { useContext } from 'react';
 import { GlobalContext } from 'src/root';
 import { ListEl } from '../ListEl';
+import { Loader } from '../Loader';
 
 export const DataList = (): JSX.Element => {
-  const { data } = useContext(GlobalContext);
+  const { data, isLoading } = useContext(GlobalContext);
+
+  if (isLoading) return <Loader />;
 
   return (
     <>

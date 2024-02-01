@@ -16,13 +16,11 @@ export const loadData = async (text: string): Promise<TrainData[]> => {
   try {
     const response = await fetch(url, options);
 
-    if (response.ok) {
-      const result: unknown = await response.json();
+    const result: unknown = await response.json();
 
-      if (isTrainArr(result)) return result;
-      else throw new Error('Unexpected result');
-    } else throw new Error('Unexpected response status');
+    if (isTrainArr(result)) return result;
+    else throw new Error('Unexpected result');
   } catch {
-    return [];
+    throw new Error('Failed to fetch');
   }
 };
