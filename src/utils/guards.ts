@@ -1,3 +1,4 @@
+import { PinCode } from 'src/types/pinCodesData';
 import { TrainData } from 'src/types/trainData';
 
 const isTrainData = (data: unknown): data is TrainData => {
@@ -37,4 +38,29 @@ const isTrainData = (data: unknown): data is TrainData => {
 
 export const isTrainArr = (data: unknown): data is TrainData[] => {
   return Array.isArray(data) && data.every((el) => isTrainData(el));
+};
+
+const isPinCode = (data: unknown): data is PinCode => {
+  return (
+    !!data &&
+    typeof data === 'object' &&
+    'pin' in data &&
+    'delivery' in data &&
+    'district' in data &&
+    'office' in data &&
+    'phone' in data &&
+    'region' in data &&
+    'related_headoffice' in data &&
+    typeof data.pin === 'number' &&
+    typeof data.delivery === 'string' &&
+    typeof data.district === 'string' &&
+    typeof data.office === 'string' &&
+    typeof data.phone === 'string' &&
+    typeof data.region === 'string' &&
+    typeof data.related_headoffice === 'string'
+  );
+};
+
+export const isPinCodeArr = (data: unknown): data is PinCode[] => {
+  return Array.isArray(data) && data.every((el) => isPinCode(el));
 };

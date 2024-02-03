@@ -1,0 +1,15 @@
+.empty-pincodes,
+.pincodes-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-size: 32px;
+  margin-top: 24px;
+}
+
+.pincodes-list {
+  flex-direction: row;
+  flex-wrap: wrap;
+  font-size: 18px;
+}

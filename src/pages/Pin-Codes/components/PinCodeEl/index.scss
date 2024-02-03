@@ -1,0 +1,57 @@
+.pincode-wrapper {
+  display: flex;
+  position: relative;
+  background: linear-gradient(135deg, #ef3445, #ff727e);
+  margin: 16px;
+  border-radius: 50%;
+
+  .pincode {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 210px;
+    height: 210px;
+    border-radius: 50%;
+    margin: 16px;
+    padding: 4px;
+    text-align: center;
+    background-color: white;
+
+    h4 {
+      margin: 8px;
+    }
+
+    img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+    }
+
+    .button-wrapper {
+      display: flex;
+      position: relative;
+      background: linear-gradient(135deg, #ef3445, #ff727e);
+      margin: 16px;
+      padding: 4px;
+      margin-top: 8px;
+      border-radius: 4px;
+      cursor: pointer;
+
+      &:hover {
+        transition: 0.25s;
+        transform: scale(1.05);
+      }
+
+      div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 105px;
+        height: 30px;
+        font-size: 14px;
+        background-color: white;
+      }
+    }
+  }
+}

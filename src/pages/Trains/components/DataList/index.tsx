@@ -1,7 +1,7 @@
 import { useContext } from 'react';
-import { GlobalContext } from 'src/root';
 import { ListEl } from '../ListEl';
-import { Loader } from '../Loader';
+import { Loader } from '../../../components/Loader';
+import { GlobalContext } from 'src/root';
 
 export const DataList = (): JSX.Element => {
   const { data, isLoading } = useContext(GlobalContext);
@@ -18,7 +18,7 @@ export const DataList = (): JSX.Element => {
         </div>
       ) : (
         <div className='empty-list'>
-          <img src='src/images/main-train.jpg' />
+          <img src='src/pages/Trains/images/main-train.jpg' />
           <h2>No data provided or invalid data</h2>
         </div>
       )}

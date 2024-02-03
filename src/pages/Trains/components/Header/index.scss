@@ -9,7 +9,8 @@
   padding: 16px;
   color: white;
 
-  div {
+  .header-title,
+  .wrapper {
     display: flex;
     flex-direction: row;
     align-items: center;
