@@ -24,6 +24,7 @@ export const Bar = (): JSX.Element => {
             <div className='links-list'>
               <div onClick={() => navigate('/trains')}>Trains</div>
               <div onClick={() => navigate('/pin-codes')}>Pin codes</div>
+              <div onClick={() => navigate('/histories')}>Histories</div>
             </div>
           </div>
         </div>

@@ -1,3 +1,4 @@
+import { HistoryType } from 'src/types/historiesData';
 import { PinCode } from 'src/types/pinCodesData';
 import { TrainData } from 'src/types/trainData';
 
@@ -63,4 +64,19 @@ const isPinCode = (data: unknown): data is PinCode => {
 
 export const isPinCodeArr = (data: unknown): data is PinCode[] => {
   return Array.isArray(data) && data.every((el) => isPinCode(el));
+};
+
+const isHistory = (data: unknown): data is HistoryType => {
+  return (
+    !!data &&
+    typeof data === 'object' &&
+    'date' in data &&
+    'description' in data &&
+    typeof data.date === 'string' &&
+    typeof data.description === 'string'
+  );
+};
+
+export const isHistoriesArr = (data: unknown): data is HistoryType[] => {
+  return Array.isArray(data) && data.every((el) => isHistory(el));
 };

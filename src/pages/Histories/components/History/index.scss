@@ -1,0 +1,17 @@
+.history {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+  height: 165px;
+  padding: 16px;
+  margin: 16px;
+  border: 6px solid rgb(0, 59, 49);
+  border-radius: 6px;
+
+  &:hover {
+    transform: scale(1.05);
+    transition: 0.35s;
+  }
+}
