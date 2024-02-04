@@ -14,12 +14,14 @@ export const PinCodeEl = ({ pinCode }: Props): JSX.Element => {
       <div className='pincode-wrapper'>
         <div className='pincode'>
           <img src='https://cdn2.iconfinder.com/data/icons/location-map-simplicity/512/post_office-512.png' />
-          <h4>
+          <h4 className='header'>
             {pinCode.pin}, {pinCode.district}
           </h4>
 
           <div className='button-wrapper'>
-            <div onClick={() => setShouldShowDetails(true)}>View more info</div>
+            <div className='details-btn' onClick={() => setShouldShowDetails(true)}>
+              View more info
+            </div>
           </div>
         </div>
       </div>

@@ -6,33 +6,35 @@ type Props = {
 };
 
 export const Details = ({ pinCode, setShouldShowDetails }: Props): JSX.Element => {
+  const { delivery, district, office, phone, region, related_headoffice, pin } = pinCode;
+
   return (
     <div className='details-overlay' onClick={() => setShouldShowDetails(false)}>
       <div className='details-wrapper' onClick={(e) => e.stopPropagation()}>
         <div className='details'>
-          <div>
-            <h3>Pin: {pinCode.pin}</h3>
+          <div className='details-col'>
+            <h3 className='header'>Pin: {pin}</h3>
             <div className='close-btn' onClick={() => setShouldShowDetails(false)}>
               x
             </div>
           </div>
           <p>
-            <b>Delivery</b>: {pinCode.delivery}
+            <b>Delivery</b>: {delivery}
           </p>
           <p>
-            <b>District</b>: {pinCode.district}
+            <b>District</b>: {district}
           </p>
           <p>
-            <b>Office</b>: {pinCode.office}
+            <b>Office</b>: {office}
           </p>
           <p>
-            <b>Phone</b>: {pinCode.phone}
+            <b>Phone</b>: {phone}
           </p>
           <p>
-            <b>Region</b>: {pinCode.region}
+            <b>Region</b>: {region}
           </p>
           <p>
-            <b>Related headoffice</b>: {pinCode.related_headoffice}
+            <b>Related headoffice</b>: {related_headoffice}
           </p>
         </div>
       </div>

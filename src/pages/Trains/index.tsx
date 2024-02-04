@@ -1,24 +1,22 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { Loader } from 'src/components/Loader';
 import { TrainData } from 'src/types/trainData';
 import { ListEl } from './components/ListEl';
 import { fetchTrains } from 'src/api/fetchTrains';
 import { Header } from 'src/components/Header';
+import { downloadData } from 'src/utils/downloadData';
 
 export const Trains = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState(false);
   const [trains, setTrains] = useState<TrainData[]>([]);
-  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleInput = async (e: React.FocusEvent<HTMLInputElement> | React.KeyboardEvent<HTMLInputElement>) => {
-    const {
-      currentTarget: { value },
-    } = e;
+    const { currentTarget } = e;
 
     try {
       setIsLoading(true);
 
-      const data = await fetchTrains(value);
+      const data = await fetchTrains(currentTarget.value);
       setTrains(data);
     } catch {
       setTrains([]);
@@ -26,19 +24,18 @@ export const Trains = (): JSX.Element => {
     } finally {
       setIsLoading(false);
 
-      if (inputRef.current) inputRef.current.blur();
+      currentTarget.blur();
     }
   };
 
   return (
-    <div className='container'>
+    <div className='trains-wrapper'>
       <Header
         url='src/images/train.png'
         title='Indian railway trains'
-        headerClassName='trains-header'
+        className='trains-header'
         rightPart={
           <input
-            ref={inputRef}
             type='text'
             placeholder='Enter some info (city, train number or category) '
             onKeyDown={(e) => {
@@ -47,14 +44,15 @@ export const Trains = (): JSX.Element => {
             onBlur={handleInput}
           />
         }
-        data={trains}
+        onSave={() => downloadData(trains)}
+        isSaveDisabled={!trains.length}
       />
       {isLoading ? (
         <Loader />
       ) : (
         <div className='list'>
-          {trains.map((trainInfo) => (
-            <ListEl trainInfo={trainInfo} key={trainInfo.train_num} />
+          {trains.map((trainInfo, index) => (
+            <ListEl trainInfo={trainInfo} key={`train-${trainInfo.train_num}-${index}`} />
           ))}
         </div>
       )}
@@ -62,7 +60,7 @@ export const Trains = (): JSX.Element => {
       {!isLoading && !trains.length && (
         <div className='empty-list'>
           <img src='src/images/main-train.jpg' />
-          <h2>No data provided or invalid data</h2>
+          <h2>No data found</h2>
         </div>
       )}
     </div>

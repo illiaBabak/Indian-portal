@@ -4,11 +4,16 @@ import { fetchHistories } from 'src/api/fetchHistories';
 import { Loader } from 'src/components/Loader';
 import { History } from './components/History';
 import { Header } from 'src/components/Header';
+import { downloadData } from 'src/utils/downloadData';
+
+type SortOption = 'older' | 'newer';
+
+const SORT_OPTIONS: Record<string, SortOption> = { older: 'older', newer: 'newer' };
 
 export const Histories = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState(false);
   const [histories, setHistories] = useState<HistoryType[]>([]);
-  const [selectedSortOption, setSelectedSortOption] = useState('older');
+  const [selectedSortOption, setSelectedSortOption] = useState<SortOption>('older');
 
   useEffect(() => {
     const loadData = async () => {
@@ -32,25 +37,24 @@ export const Histories = (): JSX.Element => {
       currentTarget: { value },
     } = e;
 
-    setSelectedSortOption(value);
+    setSelectedSortOption(SORT_OPTIONS[value]);
 
-    const sortedHistories = [...histories];
+    const sortedHistories = [...histories].sort((a, b) => {
+      const aTime = new Date(a.date).getTime();
+      const bTime = new Date(b.date).getTime();
 
-    if (value === 'older') {
-      sortedHistories.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-    } else if (value === 'newer') {
-      sortedHistories.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-    }
+      if (value === 'older') return aTime - bTime;
+      return bTime - aTime;
+    });
 
     setHistories(sortedHistories);
   };
 
   return (
-    <div>
+    <div className='histories-wrapper'>
       <Header
         title='Indian history page for the current day'
-        headerClassName='history-header'
-        data={histories}
+        className='history-header'
         rightPart={
           <>
             <p className='select-text'>Sort histories</p>
@@ -60,6 +64,8 @@ export const Histories = (): JSX.Element => {
             </select>
           </>
         }
+        onSave={() => downloadData(histories)}
+        isSaveDisabled={!histories.length}
       />
       {isLoading ? (
         <Loader />

@@ -1,24 +1,23 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { PinCode } from 'src/types/pinCodesData';
 import { PinCodeEl } from './components/PinCodeEl';
 import { Loader } from 'src/components/Loader';
 import { fetchPinCodes } from 'src/api/fetchPinCodes';
 import { Header } from 'src/components/Header';
+import { downloadData } from 'src/utils/downloadData';
 
 export const PinCodes = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState(false);
   const [pinCodes, setPinCodes] = useState<PinCode[]>([]);
-  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleInput = async (e: React.FocusEvent<HTMLInputElement> | React.KeyboardEvent<HTMLInputElement>) => {
-    const {
-      currentTarget: { value },
-    } = e;
+    const { currentTarget } = e;
 
     try {
       setIsLoading(true);
 
-      const data = await fetchPinCodes(Number(value));
+      // ! If value is not number - show alert with invalid val error
+      const data = await fetchPinCodes(Number(currentTarget.value));
       setPinCodes(data);
     } catch {
       setPinCodes([]);
@@ -26,19 +25,18 @@ export const PinCodes = (): JSX.Element => {
     } finally {
       setIsLoading(false);
 
-      if (inputRef.current) inputRef.current.blur();
+      currentTarget.blur();
     }
   };
 
   return (
-    <div>
+    <div className='pincodes-wrapper'>
       <Header
         title='Pin Codes'
-        headerClassName='pincode-header'
+        className='pincode-header'
         url='https://cdn-icons-png.freepik.com/512/169/169845.png'
         rightPart={
           <input
-            ref={inputRef}
             type='text'
             placeholder='Enter the pin number'
             onKeyDown={(e) => {
@@ -47,19 +45,20 @@ export const PinCodes = (): JSX.Element => {
             onBlur={handleInput}
           />
         }
-        data={pinCodes}
+        onSave={() => downloadData(pinCodes)}
+        isSaveDisabled={!pinCodes.length}
       />
       {isLoading ? (
         <Loader />
       ) : (
         <div className='pincodes-list'>
           {pinCodes.map((pinCode, index) => (
-            <PinCodeEl pinCode={pinCode} key={index} />
+            <PinCodeEl pinCode={pinCode} key={`pincode-${index}`} />
           ))}
         </div>
       )}
 
-      {!isLoading && !pinCodes.length && <div className='empty-pincodes'>No valid pin</div>}
+      {!isLoading && !pinCodes.length && <div className='empty-pincodes'>No data found</div>}
     </div>
   );
 };

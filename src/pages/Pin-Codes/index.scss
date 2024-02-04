@@ -1,18 +1,29 @@
 @import './components/PinCodeEl';
 @import './components/Details';
 
-.empty-pincodes,
-.pincodes-list {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  font-size: 32px;
-  margin-top: 24px;
-}
+.pincodes-wrapper {
+  .empty-pincodes,
+  .pincodes-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    font-size: 32px;
+    margin-top: 24px;
+  }
 
-.pincodes-list {
-  flex-direction: row;
-  flex-wrap: wrap;
-  font-size: 18px;
+  .pincodes-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    font-size: 18px;
+  }
+
+  .pincode-header {
+    background-size: contain;
+    background-image: url('https://wallsneedlove.com/cdn/shop/products/w0496_1s_Paisley-Elephants-Removable-Peel-and-Stick-Wallpaper_Repeating-Pattern-Sample-1_a15fd696-7bfc-41a1-9dc1-fdfcb7ec1b55.jpg?v=1604087943');
+
+    .wrapper h3 {
+      margin-right: 16px;
+    }
+  }
 }

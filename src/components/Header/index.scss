@@ -1,4 +1,4 @@
-.header {
+.page-header {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -9,7 +9,8 @@
   color: white;
 
   .header-title,
-  .wrapper {
+  .wrapper-left,
+  .wrapper-right {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -30,7 +31,7 @@
       font-size: 14px;
       cursor: pointer;
 
-      &:hover {
+      &:not(.disabled):hover {
         transition: 0.35s;
         transform: scale(1.05);
       }
@@ -38,7 +39,7 @@
 
     .disabled {
       filter: grayscale(70%);
-      opacity: 0.9;
+      opacity: 0.7;
       border: 4px solid gray;
     }
 
@@ -47,6 +48,10 @@
       height: 90px;
       object-fit: cover;
     }
+  }
+
+  .wrapper-right {
+    gap: 16px;
   }
 
   input {
@@ -59,69 +64,5 @@
     &:focus {
       outline: 2px solid orange;
     }
-  }
-}
-
-@media only screen and (max-width: 890px) {
-  .header {
-    font-size: 16px;
-    text-align: center;
-  }
-}
-
-@media only screen and (max-width: 660px) {
-  .header {
-    font-size: 10px;
-
-    div {
-      img {
-        width: 70px;
-        height: 70px;
-      }
-    }
-
-    input {
-      width: 220px;
-    }
-  }
-}
-
-@media only screen and (max-width: 390px) {
-  .header {
-    justify-content: space-around;
-    padding: 4px;
-    width: calc(100% - 4px);
-
-    input {
-      width: 150px;
-    }
-  }
-}
-
-.trains-header {
-  background: linear-gradient(158deg, rgba(207, 133, 5, 1) 15%, rgba(255, 255, 255, 1) 50%, rgba(0, 152, 2, 1) 85%);
-}
-
-.pincode-header {
-  background-size: contain;
-  background-image: url('https://wallsneedlove.com/cdn/shop/products/w0496_1s_Paisley-Elephants-Removable-Peel-and-Stick-Wallpaper_Repeating-Pattern-Sample-1_a15fd696-7bfc-41a1-9dc1-fdfcb7ec1b55.jpg?v=1604087943');
-
-  .wrapper h3 {
-    margin-right: 16px;
-  }
-}
-
-.history-header {
-  background-image: url('https://img.freepik.com/free-vector/mandala-illustration_53876-80593.jpg');
-  background-size: contain;
-
-  .select-text {
-    font-size: 24px;
-  }
-
-  .sort-select {
-    width: 300px;
-    height: 32px;
-    margin: 4px;
   }
 }

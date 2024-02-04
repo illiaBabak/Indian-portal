@@ -18,7 +18,7 @@
     text-align: center;
     background-color: white;
 
-    h4 {
+    .header {
       margin: 8px;
     }
 
@@ -43,7 +43,7 @@
         transform: scale(1.05);
       }
 
-      div {
+      .details-btn {
         display: flex;
         justify-content: center;
         align-items: center;
