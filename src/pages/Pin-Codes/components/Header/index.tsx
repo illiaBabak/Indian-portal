@@ -1,10 +1,14 @@
-import { useContext, useRef } from 'react';
-import { Bar } from 'src/pages/components/Bar';
-import { GlobalContext } from 'src/root';
-import { fetchPinCodes } from '../../api/fetchData';
+import { useRef } from 'react';
+import { Bar } from 'src/components/Bar';
+import { fetchPinCodes } from '../../../../api/fetchPinCodes';
+import { PinCode } from 'src/types/pinCodesData';
 
-export const Header = (): JSX.Element => {
-  const { setPinCodes, setIsLoading } = useContext(GlobalContext);
+type Props = {
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setPinCodes: React.Dispatch<React.SetStateAction<PinCode[]>>;
+};
+
+export const Header = ({ setIsLoading, setPinCodes }: Props): JSX.Element => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleInput = async (e: React.FocusEvent<HTMLInputElement> | React.KeyboardEvent<HTMLInputElement>) => {

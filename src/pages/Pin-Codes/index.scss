@@ -1,3 +1,7 @@
+@import './components/Header';
+@import './components/PinCodeEl';
+@import './components/Details';
+
 .empty-pincodes,
 .pincodes-list {
   display: flex;

@@ -7,7 +7,7 @@ type Props = {
 export const ListEl = ({ trainInfo }: Props): JSX.Element => {
   return (
     <div className='list-el-wrapper'>
-      <img src='src/pages/Trains/images/list-train.png' />
+      <img src='src/images/list-train.png' />
       <div className='list-el'>
         <div>
           <h2>{trainInfo.train_num}</h2>

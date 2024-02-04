@@ -29,6 +29,8 @@
   z-index: 2;
   background-color: rgba(#252525, 0.35);
   font-weight: bolder;
+  width: 100vw;
+  height: 100vh;
 
   .bar {
     display: flex;
@@ -36,6 +38,7 @@
     justify-content: flex-start;
     align-items: center;
     width: 205px;
+    height: 100%;
     background-image: url('https://res.cloudinary.com/rugstudio-com/image/upload/f_auto%2Cq_auto%2Ce_trim:15/files/productimages/safavieh/l_cl239d.jpg');
     background-size: contain;
     position: absolute;
@@ -44,16 +47,15 @@
     z-index: 4;
     color: white;
 
-    .x {
-      margin: 0 0 2px 16px;
-      font-size: 42px;
-      cursor: pointer;
-    }
-
-    div {
+    .header-wrapper {
       display: flex;
-      flex-direction: row;
       align-items: center;
+
+      .x {
+        margin: 0 0 2px 16px;
+        font-size: 42px;
+        cursor: pointer;
+      }
     }
 
     .links-list {
@@ -63,7 +65,7 @@
       align-items: center;
       font-size: 24px;
 
-      div {
+      .link {
         margin: 8px;
         cursor: pointer;
       }

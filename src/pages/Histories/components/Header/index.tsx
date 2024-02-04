@@ -1,4 +1,4 @@
-import { Bar } from 'src/pages/components/Bar';
+import { Bar } from 'src/components/Bar';
 
 export const Header = (): JSX.Element => {
   return (

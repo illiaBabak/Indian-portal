@@ -1,10 +1,14 @@
-import { useContext, useRef } from 'react';
-import { loadData } from 'src/pages/Trains/api/fetchData';
-import { Bar } from 'src/pages/components/Bar';
-import { GlobalContext } from 'src/root';
+import { useRef } from 'react';
+import { fetchTrains } from 'src/api/fetchTrains';
+import { Bar } from 'src/components/Bar';
+import { TrainData } from 'src/types/trainData';
 
-export const Header = (): JSX.Element => {
-  const { setData, setIsLoading } = useContext(GlobalContext);
+type Props = {
+  setTrains: React.Dispatch<React.SetStateAction<TrainData[]>>;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+export const Header = ({ setTrains, setIsLoading }: Props): JSX.Element => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleInput = async (e: React.FocusEvent<HTMLInputElement> | React.KeyboardEvent<HTMLInputElement>) => {
@@ -15,10 +19,10 @@ export const Header = (): JSX.Element => {
     try {
       setIsLoading(true);
 
-      const data = await loadData(value);
-      setData(data);
+      const data = await fetchTrains(value);
+      setTrains(data);
     } catch {
-      setData([]);
+      setTrains([]);
       throw new Error('The request could not be made');
     } finally {
       setIsLoading(false);
@@ -32,7 +36,7 @@ export const Header = (): JSX.Element => {
       <div className='wrapper'>
         <Bar />
         <div className='header-title'>
-          <img src='src/pages/Trains/images/train.png' />
+          <img src='src/images/train.png' />
           <h1>Indian railway trains</h1>
         </div>
       </div>
