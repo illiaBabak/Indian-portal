@@ -1,26 +1,47 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { PinCode } from 'src/types/pinCodesData';
 import { PinCodeEl } from './components/PinCodeEl';
 import { Loader } from 'src/components/Loader';
 import { fetchPinCodes } from 'src/api/fetchPinCodes';
 import { Header } from 'src/components/Header';
 import { downloadData } from 'src/utils/downloadData';
+import { GlobalContext } from 'src/root';
 
 export const PinCodes = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState(false);
   const [pinCodes, setPinCodes] = useState<PinCode[]>([]);
+  const [prevVal, setPrevVal] = useState('');
+  const [history, setHistory] = useState<Map<string, number>>(new Map());
+  const { setTypeError } = useContext(GlobalContext);
 
   const handleInput = async (e: React.FocusEvent<HTMLInputElement> | React.KeyboardEvent<HTMLInputElement>) => {
     const { currentTarget } = e;
+    setPrevVal(currentTarget.value);
+
+    setHistory((prevHistory) => {
+      const updatedHistory = new Map(prevHistory);
+      const count = updatedHistory.get(currentTarget.value) || 0;
+      updatedHistory.set(currentTarget.value, count + 1);
+      return updatedHistory;
+    });
+
+    if (currentTarget.value === prevVal || !currentTarget.value.trim()) return;
+
+    if (isNaN(Number(currentTarget.value))) {
+      setTypeError('error');
+      return;
+    }
 
     try {
       setIsLoading(true);
 
-      // ! If value is not number - show alert with invalid val error
       const data = await fetchPinCodes(Number(currentTarget.value));
       setPinCodes(data);
+
+      setTypeError('success');
     } catch {
       setPinCodes([]);
+      setTypeError('error');
       throw new Error('The request could not be made (pin codes)');
     } finally {
       setIsLoading(false);
@@ -45,8 +66,10 @@ export const PinCodes = (): JSX.Element => {
             onBlur={handleInput}
           />
         }
+        onSaveHistory={() => downloadData(history, 'Pin codes')}
         onSave={() => downloadData(pinCodes)}
         isSaveDisabled={!pinCodes.length}
+        isSaveHistoryDisabled={!history.size}
       />
       {isLoading ? (
         <Loader />

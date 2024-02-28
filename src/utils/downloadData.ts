@@ -3,6 +3,16 @@ import { PinCode } from 'src/types/pinCodesData';
 import { TrainData } from 'src/types/trainData';
 import { capitalize } from './capitalize';
 
+const formatMap = (title: string, content: Map<string, number>): string => {
+  let formattedString = `${title}\n\n`;
+
+  content.forEach((count, key) => {
+    formattedString += `${key}: ${count}\n`;
+  });
+
+  return formattedString;
+};
+
 const formatData = (data: TrainData[] | PinCode[] | HistoryType[]): string => {
   let formattedData = '';
 
@@ -26,10 +36,17 @@ const formatData = (data: TrainData[] | PinCode[] | HistoryType[]): string => {
   return formattedData;
 };
 
-export const downloadData = (content: TrainData[] | PinCode[] | HistoryType[]): void => {
+export const downloadData = (
+  content: TrainData[] | PinCode[] | HistoryType[] | Map<string, number>,
+  title?: string
+): void => {
   const link = document.createElement('a');
+  let formattedContent;
 
-  const file = new Blob([formatData(content)], { type: 'text/plain' });
+  if (content instanceof Map) formattedContent = formatMap(title ?? '', content);
+  else formattedContent = formatData(content);
+
+  const file = new Blob([formattedContent], { type: 'text/plain' });
 
   link.href = URL.createObjectURL(file);
 

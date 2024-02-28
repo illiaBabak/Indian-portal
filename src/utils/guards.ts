@@ -1,6 +1,30 @@
 import { HistoryType } from 'src/types/historiesData';
 import { PinCode } from 'src/types/pinCodesData';
-import { TrainData } from 'src/types/trainData';
+import { TrainData, TrainSubObj } from 'src/types/trainData';
+
+const isTrainSubObj = (subObj: unknown): subObj is TrainSubObj => {
+  return (
+    !!subObj &&
+    typeof subObj === 'object' &&
+    'id' in subObj &&
+    'days' in subObj &&
+    'to_id' in subObj &&
+    'classes' in subObj &&
+    'from_id' in subObj &&
+    'arriveTime' in subObj &&
+    'departTime' in subObj &&
+    typeof subObj.id === 'string' &&
+    !!subObj.days &&
+    typeof subObj.days === 'object' &&
+    Object.values(subObj.days).every((value) => typeof value === 'number' || typeof value === 'string') &&
+    typeof subObj.to_id === 'string' &&
+    Array.isArray(subObj.classes) &&
+    subObj.classes.every((el) => typeof el === 'string') &&
+    typeof subObj.from_id === 'string' &&
+    typeof subObj.departTime === 'string' &&
+    typeof subObj.arriveTime === 'string'
+  );
+};
 
 const isTrainData = (data: unknown): data is TrainData => {
   return (
@@ -15,25 +39,7 @@ const isTrainData = (data: unknown): data is TrainData => {
     typeof data.name === 'string' &&
     typeof data.train_from === 'string' &&
     typeof data.train_to === 'string' &&
-    !!data.data &&
-    typeof data.data === 'object' &&
-    'id' in data.data &&
-    'days' in data.data &&
-    'to_id' in data.data &&
-    'classes' in data.data &&
-    'from_id' in data.data &&
-    'arriveTime' in data.data &&
-    'departTime' in data.data &&
-    typeof data.data.id === 'string' &&
-    !!data.data.days &&
-    typeof data.data.days === 'object' &&
-    Object.values(data.data.days).every((value) => typeof value === 'number' || typeof value === 'string') &&
-    typeof data.data.to_id === 'string' &&
-    Array.isArray(data.data.classes) &&
-    data.data.classes.every((el) => typeof el === 'string') &&
-    typeof data.data.from_id === 'string' &&
-    typeof data.data.departTime === 'string' &&
-    typeof data.data.arriveTime === 'string'
+    isTrainSubObj(data.data)
   );
 };
 

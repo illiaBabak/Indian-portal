@@ -3,13 +3,15 @@ export type TrainData = {
   name: string;
   train_from: string;
   train_to: string;
-  data: {
-    id: string;
-    days: Record<string, number | string>;
-    to_id: string;
-    classes: string[];
-    from_id: string;
-    arriveTime: string;
-    departTime: string;
-  };
+  data: TrainSubObj;
+};
+
+export type TrainSubObj = {
+  id: string;
+  days: Record<string, number | string>;
+  to_id: string;
+  classes: string[];
+  from_id: string;
+  arriveTime: string;
+  departTime: string;
 };

@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { HistoryType } from 'src/types/historiesData';
 import { fetchHistories } from 'src/api/fetchHistories';
 import { Loader } from 'src/components/Loader';
 import { History } from './components/History';
 import { Header } from 'src/components/Header';
 import { downloadData } from 'src/utils/downloadData';
+import { GlobalContext } from 'src/root';
 
 type SortOption = 'older' | 'newer';
 
@@ -14,23 +15,28 @@ export const Histories = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState(false);
   const [histories, setHistories] = useState<HistoryType[]>([]);
   const [selectedSortOption, setSelectedSortOption] = useState<SortOption>('older');
+  const { setTypeError } = useContext(GlobalContext);
+
+  const loadData = useCallback(async () => {
+    try {
+      setIsLoading(true);
+
+      const data = await fetchHistories();
+      setHistories(data);
+
+      setTypeError('success');
+    } catch {
+      setHistories([]);
+      setTypeError('error');
+      throw new Error('The request could not be made (histories)');
+    } finally {
+      setIsLoading(false);
+    }
+  }, [setHistories, setIsLoading, setTypeError]);
 
   useEffect(() => {
-    const loadData = async () => {
-      try {
-        setIsLoading(true);
-
-        const data = await fetchHistories();
-        setHistories(data);
-      } catch {
-        setHistories([]);
-        throw new Error('The request could not be made (histories)');
-      } finally {
-        setIsLoading(false);
-      }
-    };
     loadData();
-  }, [setHistories, setIsLoading]);
+  }, [loadData]);
 
   const sortHistories = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const {
@@ -74,6 +80,15 @@ export const Histories = (): JSX.Element => {
           {histories.map((history, index) => (
             <History history={history} key={`history-${index}`} />
           ))}
+        </div>
+      )}
+
+      {!isLoading && !histories.length && (
+        <div className='empty-histories'>
+          No data found
+          <div className='retry-btn' onClick={loadData}>
+            Retry
+          </div>
         </div>
       )}
     </div>
