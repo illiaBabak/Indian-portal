@@ -13,17 +13,17 @@ const formatMap = (title: string, content: Map<string, number>): string => {
   return formattedString;
 };
 
+const writeLine = (val: string | Record<string, string | number> | string[] | number, key: string) => {
+  if (typeof val !== 'object') return `${capitalize(key).replace('-', ' ')} - ${val}\n`;
+};
+
 const formatData = (data: TrainData[] | PinCode[] | HistoryType[]): string => {
   let formattedData = '';
-
-  const writeLine = (val: string | Record<string, string | number> | string[] | number, key: string) => {
-    if (typeof val !== 'object') formattedData += `${capitalize(key).replace('-', ' ')} - ${val}\n`;
-  };
 
   for (let i = 0; i < data.length; i++) {
     for (const [key, val] of Object.entries(data[i])) {
       if (typeof val !== 'object') {
-        writeLine(val, key);
+        formattedData += writeLine(val, key);
         continue;
       }
 
@@ -41,10 +41,7 @@ export const downloadData = (
   title?: string
 ): void => {
   const link = document.createElement('a');
-  let formattedContent;
-
-  if (content instanceof Map) formattedContent = formatMap(title ?? '', content);
-  else formattedContent = formatData(content);
+  const formattedContent = content instanceof Map ? formatMap(title ?? '', content) : formatData(content);
 
   const file = new Blob([formattedContent], { type: 'text/plain' });
 

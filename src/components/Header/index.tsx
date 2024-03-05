@@ -25,11 +25,10 @@ export const Header = ({
   isSaveHistoryDisabled,
 }: Props): JSX.Element => {
   const { typeError } = useContext(GlobalContext);
-  const alertKey = `alert-${Date.now()}`;
 
   return (
     <div className={`page-header ${className}`}>
-      {!isSaveHistoryDisabled && typeError && <Alert typeError={typeError} key={alertKey} />}
+      {!isSaveHistoryDisabled && typeError && <Alert typeError={typeError} />}
       <div className='wrapper-left'>
         <Bar />
         <div className='header-title'>

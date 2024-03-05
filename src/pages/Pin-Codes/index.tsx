@@ -10,59 +10,54 @@ import { useSearchParams } from 'react-router-dom';
 
 export const PinCodes = (): JSX.Element => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '');
   const [isLoading, setIsLoading] = useState(false);
   const [pinCodes, setPinCodes] = useState<PinCode[]>([]);
-  const [prevVal, setPrevVal] = useState('');
   const [history, setHistory] = useState<Map<string, number>>(new Map());
   const { setTypeError } = useContext(GlobalContext);
+
+  const searchText = searchParams.get('q');
 
   useEffect(() => {
     const loadData = async () => {
       try {
         setIsLoading(true);
 
-        const query = searchParams.get('q');
-
-        if (query) {
-          const data = await fetchPinCodes(Number(query));
+        if (searchText) {
+          const data = await fetchPinCodes(Number(searchText));
           setPinCodes(data);
 
           setTypeError('success');
-        } else {
-          setTypeError('error');
-          throw new Error('Invalid query parameter');
         }
       } catch {
         setPinCodes([]);
         setTypeError('error');
-
-        throw new Error('The request could not be made (pin codes)');
       } finally {
         setIsLoading(false);
       }
     };
     loadData();
-  }, [searchParams, setTypeError]);
+  }, [searchText, setTypeError]);
 
-  const handleInput = () => {
-    setPrevVal(searchQuery);
+  const handleInput = (e: React.FocusEvent<HTMLInputElement, Element> | React.KeyboardEvent<HTMLInputElement>) => {
+    const {
+      currentTarget: { value },
+    } = e;
 
-    setHistory((prevHistory) => {
-      const updatedHistory = new Map(prevHistory);
-      const count = updatedHistory.get(searchQuery) || 0;
-      updatedHistory.set(searchQuery, count + 1);
-      return updatedHistory;
-    });
+    if (value === searchText) return;
 
-    if (searchQuery === prevVal || !searchQuery.trim()) return;
-
-    if (isNaN(Number(searchQuery))) {
+    if (isNaN(Number(value))) {
       setTypeError('error');
       return;
     }
 
-    setSearchParams({ q: searchQuery });
+    setHistory((prevHistory) => {
+      const updatedHistory = new Map(prevHistory);
+      const count = updatedHistory.get(value) || 0;
+      updatedHistory.set(value, count + 1);
+      return updatedHistory;
+    });
+
+    setSearchParams({ q: value });
   };
 
   return (
@@ -76,11 +71,10 @@ export const PinCodes = (): JSX.Element => {
             type='text'
             placeholder='Enter the pin number'
             onKeyDown={(e) => {
-              if (e.key === 'Enter') handleInput();
+              if (e.key === 'Enter') e.currentTarget.blur();
             }}
             onBlur={handleInput}
-            value={searchQuery}
-            onChange={(event) => setSearchQuery(event.target.value)}
+            defaultValue={searchParams.get('q') ?? ''}
           />
         }
         onSaveHistory={() => downloadData(history, 'Pin codes')}
