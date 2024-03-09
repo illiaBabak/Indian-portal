@@ -9,7 +9,7 @@ export const ListEl = ({ trainInfo }: Props): JSX.Element => {
 
   return (
     <div className='list-el-wrapper'>
-      <img src='public/list-train.png' />
+      <img src='https://png.pngtree.com/png-vector/20230109/ourmid/pngtree-train-on-a-white-background-png-image_6556767.png' />
       <div className='list-el'>
         <div>
           <h2>{train_num}</h2>

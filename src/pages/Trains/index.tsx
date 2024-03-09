@@ -58,7 +58,7 @@ export const Trains = (): JSX.Element => {
   return (
     <div className='trains-wrapper'>
       <Header
-        url='https://docs.google.com/uc?id=1DBn8pRlOcj4FeGMBV35iBDCrwVf0EZ9Q'
+        url='https://png.pngtree.com/png-clipart/20230126/original/pngtree-train-on-a-white-background-png-image_8930665.png'
         title='Indian railway trains'
         className='trains-header'
         rightPart={
@@ -89,7 +89,7 @@ export const Trains = (): JSX.Element => {
 
       {!isLoading && !trains.length && (
         <div className='empty-list'>
-          <img src='https://docs.google.com/uc?id=1J5aM-imswgcQGdTntALPqekrAXh_WsXi' />
+          <img src='https://www.freeiconspng.com/thumbs/logistic-icon-png/train-transportation-icon-png-21.png' />
           <h2>No data found</h2>
         </div>
       )}
