@@ -58,7 +58,7 @@ export const Trains = (): JSX.Element => {
   return (
     <div className='trains-wrapper'>
       <Header
-        url='src/images/train.png'
+        url='https://docs.google.com/uc?id=1DBn8pRlOcj4FeGMBV35iBDCrwVf0EZ9Q'
         title='Indian railway trains'
         className='trains-header'
         rightPart={
@@ -89,7 +89,7 @@ export const Trains = (): JSX.Element => {
 
       {!isLoading && !trains.length && (
         <div className='empty-list'>
-          <img src='src/images/main-train.jpg' />
+          <img src='https://docs.google.com/uc?id=1J5aM-imswgcQGdTntALPqekrAXh_WsXi' />
           <h2>No data found</h2>
         </div>
       )}
