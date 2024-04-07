@@ -13,7 +13,7 @@ export const PinCodes = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState(false);
   const [pinCodes, setPinCodes] = useState<PinCode[]>([]);
   const [history, setHistory] = useState<Map<string, number>>(new Map());
-  const { setTypeError } = useContext(GlobalContext);
+  const { setAlertType } = useContext(GlobalContext);
 
   const searchText = searchParams.get('q');
 
@@ -26,17 +26,17 @@ export const PinCodes = (): JSX.Element => {
           const data = await fetchPinCodes(Number(searchText));
           setPinCodes(data);
 
-          setTypeError('success');
+          setAlertType('success');
         }
       } catch {
         setPinCodes([]);
-        setTypeError('error');
+        setAlertType('error');
       } finally {
         setIsLoading(false);
       }
     };
     loadData();
-  }, [searchText, setTypeError]);
+  }, [searchText, setAlertType]);
 
   const handleInput = (e: React.FocusEvent<HTMLInputElement, Element> | React.KeyboardEvent<HTMLInputElement>) => {
     const {
@@ -46,7 +46,7 @@ export const PinCodes = (): JSX.Element => {
     if (value === searchText) return;
 
     if (isNaN(Number(value))) {
-      setTypeError('error');
+      setAlertType('error');
       return;
     }
 

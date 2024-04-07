@@ -3,10 +3,10 @@ import { GlobalContext } from 'src/root';
 import { capitalize } from 'src/utils/capitalize';
 
 export const Alert = ({ typeError }: { typeError: 'error' | 'success' }): JSX.Element => {
-  const { setTypeError } = useContext(GlobalContext);
+  const { setAlertType } = useContext(GlobalContext);
 
   return (
-    <div className={`custom-alert ${typeError}-alert`} onAnimationEnd={() => setTypeError(null)}>
+    <div className={`custom-alert ${typeError}-alert`} onAnimationEnd={() => setAlertType(null)}>
       <img
         src={
           typeError === 'error'

@@ -2,10 +2,15 @@ import { HistoryType } from 'src/types/historiesData';
 import { PinCode } from 'src/types/pinCodesData';
 import { TrainData, TrainSubObj } from 'src/types/trainData';
 
+const isString = (val: unknown): val is string => typeof val === 'string';
+
+const isNumber = (val: unknown): val is number => typeof val === 'number';
+
+const isObj = (val: unknown): val is object => !!val && typeof val === 'object';
+
 const isTrainSubObj = (subObj: unknown): subObj is TrainSubObj => {
   return (
-    !!subObj &&
-    typeof subObj === 'object' &&
+    isObj(subObj) &&
     'id' in subObj &&
     'days' in subObj &&
     'to_id' in subObj &&
@@ -13,32 +18,30 @@ const isTrainSubObj = (subObj: unknown): subObj is TrainSubObj => {
     'from_id' in subObj &&
     'arriveTime' in subObj &&
     'departTime' in subObj &&
-    typeof subObj.id === 'string' &&
-    !!subObj.days &&
-    typeof subObj.days === 'object' &&
-    Object.values(subObj.days).every((value) => typeof value === 'number' || typeof value === 'string') &&
-    typeof subObj.to_id === 'string' &&
+    isString(subObj.id) &&
+    isString(subObj.from_id) &&
+    isString(subObj.departTime) &&
+    isString(subObj.arriveTime) &&
+    isString(subObj.to_id) &&
+    isObj(subObj.days) &&
+    Object.values(subObj.days).every((value) => isNumber(value) || isString(value)) &&
     Array.isArray(subObj.classes) &&
-    subObj.classes.every((el) => typeof el === 'string') &&
-    typeof subObj.from_id === 'string' &&
-    typeof subObj.departTime === 'string' &&
-    typeof subObj.arriveTime === 'string'
+    subObj.classes.every((el) => isString(el))
   );
 };
 
 const isTrainData = (data: unknown): data is TrainData => {
   return (
-    !!data &&
-    typeof data === 'object' &&
+    isObj(data) &&
     'train_num' in data &&
     'name' in data &&
     'train_from' in data &&
     'train_to' in data &&
     'data' in data &&
-    typeof data.train_num === 'number' &&
-    typeof data.name === 'string' &&
-    typeof data.train_from === 'string' &&
-    typeof data.train_to === 'string' &&
+    isNumber(data.train_num) &&
+    isString(data.name) &&
+    isString(data.train_from) &&
+    isString(data.train_to) &&
     isTrainSubObj(data.data)
   );
 };
@@ -49,8 +52,7 @@ export const isTrainArr = (data: unknown): data is TrainData[] => {
 
 const isPinCode = (data: unknown): data is PinCode => {
   return (
-    !!data &&
-    typeof data === 'object' &&
+    isObj(data) &&
     'pin' in data &&
     'delivery' in data &&
     'district' in data &&
@@ -58,13 +60,13 @@ const isPinCode = (data: unknown): data is PinCode => {
     'phone' in data &&
     'region' in data &&
     'related_headoffice' in data &&
-    typeof data.pin === 'number' &&
-    typeof data.delivery === 'string' &&
-    typeof data.district === 'string' &&
-    typeof data.office === 'string' &&
-    typeof data.phone === 'string' &&
-    typeof data.region === 'string' &&
-    typeof data.related_headoffice === 'string'
+    isNumber(data.pin) &&
+    isString(data.delivery) &&
+    isString(data.district) &&
+    isString(data.office) &&
+    isString(data.phone) &&
+    isString(data.region) &&
+    isString(data.related_headoffice)
   );
 };
 
@@ -73,14 +75,7 @@ export const isPinCodeArr = (data: unknown): data is PinCode[] => {
 };
 
 const isHistory = (data: unknown): data is HistoryType => {
-  return (
-    !!data &&
-    typeof data === 'object' &&
-    'date' in data &&
-    'description' in data &&
-    typeof data.date === 'string' &&
-    typeof data.description === 'string'
-  );
+  return isObj(data) && 'date' in data && 'description' in data && isString(data.date) && isString(data.description);
 };
 
 export const isHistoriesArr = (data: unknown): data is HistoryType[] => {

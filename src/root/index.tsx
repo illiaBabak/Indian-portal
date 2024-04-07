@@ -5,22 +5,22 @@ import { PinCodes } from 'src/pages/Pin-Codes';
 import { Trains } from 'src/pages/Trains';
 
 type GlobalContextType = {
-  setTypeError: React.Dispatch<React.SetStateAction<'error' | 'success' | null>>;
-  typeError: 'error' | 'success' | null;
+  setAlertType: React.Dispatch<React.SetStateAction<'error' | 'success' | null>>;
+  alertType: 'error' | 'success' | null;
 };
 
 export const GlobalContext = createContext<GlobalContextType>({
-  setTypeError: () => {
+  setAlertType: () => {
     throw new Error('Global context is not initialized');
   },
-  typeError: null,
+  alertType: null,
 });
 
 export const App = (): JSX.Element => {
-  const [typeError, setTypeError] = useState<'error' | 'success' | null>(null);
+  const [alertType, setAlertType] = useState<'error' | 'success' | null>(null);
 
   return (
-    <GlobalContext.Provider value={{ typeError, setTypeError }}>
+    <GlobalContext.Provider value={{ alertType, setAlertType }}>
       <BrowserRouter>
         <Routes>
           <Route path='/Indian-portal'>

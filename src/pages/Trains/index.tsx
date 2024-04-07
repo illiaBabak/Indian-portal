@@ -13,7 +13,7 @@ export const Trains = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState(false);
   const [trains, setTrains] = useState<TrainData[]>([]);
   const [history, setHistory] = useState<Map<string, number>>(new Map());
-  const { setTypeError } = useContext(GlobalContext);
+  const { setAlertType } = useContext(GlobalContext);
 
   const searchText = searchParams.get('q');
 
@@ -26,17 +26,17 @@ export const Trains = (): JSX.Element => {
           const data = await fetchTrains(searchText);
           setTrains(data);
 
-          setTypeError('success');
+          setAlertType('success');
         }
       } catch {
         setTrains([]);
-        setTypeError('error');
+        setAlertType('error');
       } finally {
         setIsLoading(false);
       }
     };
     loadData();
-  }, [searchText, setTypeError]);
+  }, [searchText, setAlertType]);
 
   const handleInput = (e: React.FocusEvent<HTMLInputElement, Element> | React.KeyboardEvent<HTMLInputElement>) => {
     const {

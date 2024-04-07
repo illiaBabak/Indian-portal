@@ -15,7 +15,7 @@ export const Histories = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState(false);
   const [histories, setHistories] = useState<HistoryType[]>([]);
   const [selectedSortOption, setSelectedSortOption] = useState<SortOption>('older');
-  const { setTypeError } = useContext(GlobalContext);
+  const { setAlertType } = useContext(GlobalContext);
 
   const loadData = useCallback(async () => {
     try {
@@ -24,15 +24,15 @@ export const Histories = (): JSX.Element => {
       const data = await fetchHistories();
       setHistories(data);
 
-      setTypeError('success');
+      setAlertType('success');
     } catch {
       setHistories([]);
-      setTypeError('error');
+      setAlertType('error');
       throw new Error('The request could not be made (histories)');
     } finally {
       setIsLoading(false);
     }
-  }, [setHistories, setIsLoading, setTypeError]);
+  }, [setHistories, setIsLoading, setAlertType]);
 
   useEffect(() => {
     loadData();

@@ -24,7 +24,7 @@ export const Header = ({
   onSaveHistory,
   isSaveHistoryDisabled,
 }: Props): JSX.Element => {
-  const { typeError } = useContext(GlobalContext);
+  const { alertType: typeError } = useContext(GlobalContext);
 
   return (
     <div className={`page-header ${className}`}>
