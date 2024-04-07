@@ -27,7 +27,7 @@ export const Bar = (): JSX.Element => {
                 const optionText = capitalize(route.replace('-', ' '));
 
                 return (
-                  <div className='link' onClick={() => navigate(`/${route}`)} key={`route-${optionText}-${index}`}>
+                  <div className='link' onClick={() => navigate(`../${route}`)} key={`route-${optionText}-${index}`}>
                     {optionText}
                   </div>
                 );

@@ -23,10 +23,13 @@ export const App = (): JSX.Element => {
     <GlobalContext.Provider value={{ typeError, setTypeError }}>
       <BrowserRouter>
         <Routes>
-          <Route path='/*' element={<Navigate to='/trains' />} />
-          <Route path='/trains' element={<Trains />} />
-          <Route path='/pin-codes' element={<PinCodes />} />
-          <Route path='/histories' element={<Histories />} />
+          <Route path='/Indian-portal'>
+            <Route index element={<Navigate to='trains' />} />
+            <Route path='*' element={<Navigate to='trains' />} />
+            <Route path='trains' element={<Trains />} />
+            <Route path='pin-codes' element={<PinCodes />} />
+            <Route path='histories' element={<Histories />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </GlobalContext.Provider>
